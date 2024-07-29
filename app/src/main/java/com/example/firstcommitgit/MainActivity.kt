@@ -13,11 +13,5 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
-
-        Handler().postDelayed({
-            val intent = Intent(this, Segunda::class.java)
-            startActivity(intent)
-            finish()
-        }, 2000)
     }
 }
