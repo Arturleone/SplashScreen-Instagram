@@ -36,13 +36,14 @@ class Cadastro : AppCompatActivity() {
             if (inputUsuario == null || inputConfirmSenha == null || inputSenha == null) {
                 showError("Todos os campos são obrigatórios!")
             } else if (inputSenha != inputConfirmSenha) {
-
-            } else if () {
-
+                showError("As senhas não estão iguais")
+            } else if (!isValidPassword(inputSenha)) {
+                showError("A senha tem que ter mais de 6 caracteres, uma letra maiúscula, 3 números, duas letras e um caracter especial")
             } else {
                 Toast.makeText(this, "Cadastro realizado com sucesso!", Toast.LENGTH_SHORT).show()
-                finish()
+                startActivity(Intent(this, Login::class.java))
                 User(inputUsuario, inputSenha)
+                finish()
             }
         }
     }
@@ -60,12 +61,12 @@ class Cadastro : AppCompatActivity() {
     }
 
     private fun isValidPassword (senha: String): Boolean {
-        if (senha.length < 8) return false
-        if (senha.any()) return false
-        if (senha.length < 8) return false
-        if (senha.length < 8) return false
-
+        val SanitizedPassword = senha.replace(" ", "")
+        if (senha.length < 6) return false //Saber se a senha é maior do que 6 dígitos
+        if (!senha.any { it.isUpperCase() }) return false //Se a senha possui ao menos uma letra maiúscula
+        if (senha.count { it.isDigit() } < 3) return false // tem que ter no mínimo 3 números
+        if (senha.count { it.isLetter() } < 2) return false //ao menos duas letra
+        if (!senha.any { !it.isLetterOrDigit() }) return false //ao menos um caracter especial
+        return true
     }
-
-
 }
